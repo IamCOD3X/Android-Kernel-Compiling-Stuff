@@ -105,14 +105,14 @@ DATE=$(TZ=Asia/Kolkata date +"%Y%m%d-%T")
 	if [ $COMPILER = "clang" ]
 	then
 		msg "|| Cloning Clang ||"
-		git clone --depth=1 https://github.com/sohamxda7/llvm-stable.git -b aosp-13.0.3 /home/DECODER/Downloads/Kernel/ToolChains/clang-llvm
-        git clone https://github.com/sohamxda7/llvm-stable -b gcc64 --depth=1 /home/DECODER/Downloads/Kernel/ToolChains/gcc
-        git clone https://github.com/sohamxda7/llvm-stable -b gcc32  --depth=1 /home/DECODER/Downloads/Kernel/ToolChains/gcc32
+		git clone --depth=1 https://github.com/sohamxda7/llvm-stable.git -b aosp-13.0.3 /home/cod3x/Android/Kernels/ToolChains/clang-llvm
+        git clone https://github.com/sohamxda7/llvm-stable -b gcc64 --depth=1 /home/cod3x/Android/Kernels/ToolChains/gcc
+        git clone https://github.com/sohamxda7/llvm-stable -b gcc32  --depth=1 /home/cod3x/Android/Kernels/ToolChains/gcc32
 
 		# Toolchain Directory defaults to clang-llvm
-		TC_DIR=/home/DECODER/Downloads/Kernel/ToolChains/clang-llvm
-		GC_DIR=/home/DECODER/Downloads/Kernel/ToolChains/gcc
-		GC2_DIR=/home/DECODER/Downloads/Kernel/ToolChains/gcc32
+		TC_DIR=/home/cod3x/Android/Kernels/ToolChains/clang-llvm
+		GC_DIR=/home/cod3x/Android/Kernels/ToolChains/gcc
+		GC2_DIR=/home/cod3x/Android/Kernels/ToolChains/gcc32
 	elif [ $COMPILER = "gcc" ]
 	then
 		msg "|| Cloning GCC 9.3.0 baremetal ||"
@@ -123,7 +123,7 @@ DATE=$(TZ=Asia/Kolkata date +"%Y%m%d-%T")
 	fi
 
 	msg "|| Cloning libufdt ||"
-	git clone https://android.googlesource.com/platform/system/libufdt /home/DECODER/Downloads/Kernel/ToolChains/scripts/ufdt/libufdt
+	git clone https://android.googlesource.com/platform/system/libufdt /home/cod3x/Android/Kernels/ToolChains/scripts/ufdt/libufdt
 }
 
 

@@ -9,12 +9,12 @@ PARENT_DIR=`readlink -f ${DIR}/..`
 
 export PLATFORM_VERSION=11
 export ANDROID_MAJOR_VERSION=r
-export CROSS_COMPILE=/home/DECODER/Downloads/Kernel/ToolChains/aarch64-4.9/bin/aarch64-linux-android-
-export CLANG_TRIPLE=/home/DECODER/Downloads/Kernel/ToolChains/clang-r383902/bin/aarch64-linux-gnu-
+export CROSS_COMPILE=/home/cod3x/Android/Kernels/ToolChains/aarch64-4.9/bin/aarch64-linux-android-
+export CLANG_TRIPLE=/home/cod3x/Android/Kernels/ToolChains/clang-r383902/bin/aarch64-linux-gnu-
 export ARCH=arm64
-export SEC_BUILD_CONF_VENDOR_BUILD_OS=13
-export LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN=/home/DECODER/Downloads/Kernel/ToolChains/aarch64-linux-android-4.9/bin
-export CLANG_PREBUILT_BIN=/home/DECODER/Downloads/Kernel/ToolChains/clang-r383902/bin
+export SEC_BUILD_CONF_VENDOR_BUILD_OS=11
+export LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN=/home/cod3x/Android/Kernels/ToolChains/aarch64-linux-android-4.9/bin
+export CLANG_PREBUILT_BIN=/home/cod3x/Android/Kernels/ToolChains/clang-r383902/bin
 export PATH=$PATH:$LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN:$CLANG_PREBUILT_BIN
 export LLVM=1
 KERNEL_MAKE_ENV="LOCALVERSION=-ViP3R-BY-COD3X"
@@ -33,7 +33,7 @@ pause(){
 }
 
 toolchain(){
-  if [ ! -d /home/DECODER/Downloads/Kernel/ToolChains/aarch64-4.9 ]; then
+  if [ ! -d /home/cod3x/Android/Kernels/ToolChains/aarch64-4.9 ]; then
     pause 'clone Toolchain aarch64-linux-android-4.9 cross compiler'
     git clone --branch android-9.0.0_r59 https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9 $PARENT_DIR/aarch64-linux-android-4.9
     . $DIR/build_menu
@@ -41,7 +41,7 @@ toolchain(){
 }
 
 clang(){
-  if [ ! -d /home/DECODER/Downloads/Kernel/ToolChains/clang-r383902 ]; then
+  if [ ! -d /home/cod3x/Android/Kernels/ToolChains/clang-r383902 ]; then
     pause 'clone Android Clang/LLVM Prebuilts'
     git clone https://github.com/afaneh-toolchain/prebuilts_clang_host_linux-x86_clang-r383902 $PARENT_DIR/clang-r383902
     . $DIR/build_menu
