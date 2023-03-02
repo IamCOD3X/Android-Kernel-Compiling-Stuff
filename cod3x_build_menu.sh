@@ -12,12 +12,12 @@ export ANDROID_MAJOR_VERSION=r
 export CROSS_COMPILE=/home/cod3x/Android/Kernels/ToolChains/aarch64-4.9/bin/aarch64-linux-android-
 export CLANG_TRIPLE=/home/cod3x/Android/Kernels/ToolChains/clang-r383902/bin/aarch64-linux-gnu-
 export ARCH=arm64
-export SEC_BUILD_CONF_VENDOR_BUILD_OS=11
+export SEC_BUILD_CONF_VENDOR_BUILD_OS=13
 export LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN=/home/cod3x/Android/Kernels/ToolChains/aarch64-linux-android-4.9/bin
 export CLANG_PREBUILT_BIN=/home/cod3x/Android/Kernels/ToolChains/clang-r383902/bin
 export PATH=$PATH:$LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN:$CLANG_PREBUILT_BIN
 export LLVM=1
-KERNEL_MAKE_ENV="LOCALVERSION=-ViP3R-BY-COD3X"
+KERNEL_MAKE_ENV="LOCALVERSION=-NetHunter"
 
 # Color
 ON_BLUE=`echo -e "\033[44m"`	# On Blue
@@ -50,7 +50,7 @@ clang(){
 
 variant(){
   findconfig=""
-  findconfig=($(ls arch/arm64/configs/afaneh_* 2>/dev/null))
+  findconfig=($(ls arch/arm64/configs/cod3x_* 2>/dev/null))
   declare -i i=1
   shift 2
   echo ""
@@ -86,7 +86,7 @@ build_kernel(){
   variant
   echo "${BGREEN}***** Compiling kernel *****${STD}"
   [ ! -d "$OUT_DIR" ] && mkdir $OUT_DIR
-  make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV codex_${VARIANT}_defconfig
+  make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV cod3x_${VARIANT}_defconfig
   make -j$(nproc) -C $(pwd) $KERNEL_MAKE_ENV
 
   [ -e $DIR/arch/arm64/boot/Image.gz ] && cp $DIR/arch/arm64/boot/Image.gz $OUT_DIR/Image.gz
@@ -94,8 +94,8 @@ build_kernel(){
     cp $DIR/arch/arm64/boot/Image $OUT_DIR/Image
 
     DTB_DIR=$(pwd)/arch/arm64/boot/dts
-    $(pwd)/tools/mkdtimg cfg_create $(pwd)/out/dtb.img dt.configs/exynos2100.cfg -d ${DTB_DIR}/exynos
-    $(pwd)/tools/mkdtimg cfg_create $(pwd)/out/dtbo.img dt.configs/${VARIANT}.cfg -d ${DTB_DIR}/samsung/${VARIANT}
+    $(pwd)/tools/mkdtimg cfg_create $(pwd)/out/dtb.img dt.configs/qcom8250.cfg -d ${DTB_DIR}/qcom
+    $(pwd)/tools/mkdtimg cfg_create $(pwd)/out/dtbo.img dt.configs/${VARIANT}.cfg -d ${DTB_DIR}/qcom/${VARIANT}
     echo "${BGREEN}***** Ready to Roar *****${STD}"
     pause 'continue'
   else
