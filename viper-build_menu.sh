@@ -1,8 +1,7 @@
 #!/bin/bash
 #
 # Compile script for LOS kernel
-# Copyright (C) 2020-2021 Adithya R & @johnmart19.
-# Copyright (C) 2021-2022 Craft Rom.
+# Copyright (C) 2023 IamCOD3X
 
 SECONDS=0 # builtin bash timer
 
@@ -56,7 +55,7 @@ for arg in "$@"; do
 		-mi|--miui*)miui=true; shift;;
 	esac
 done
-case $TYPE in nightly|stable);; *)TYPE=experimental;; esac
+case $TYPE in nightly|stable);; *)TYPE=stable;; esac
 
 # debug:
 #echo "`date`: $clean $regen $help $do_not_send_to_tg $TYPE $DESC" >>build_sh.log
@@ -136,25 +135,6 @@ if $clean; then
 	sleep 1.5
 fi
 
-# Telegram setup
-push_message() {
-    curl -s -X POST \
-        https://api.telegram.org/bot6101524119:AAE6fIAHLLusm0Ukz1xR840ixHPMaMce-rE/sendMessage \
-        -d chat_id="-1001695676652" \
-        -d text="$1" \
-        -d "parse_mode=html" \
-        -d "disable_web_page_preview=true"
-}
-
-push_document() {
-    curl -s -X POST \
-        https://api.telegram.org/bot6101524119:AAE6fIAHLLusm0Ukz1xR840ixHPMaMce-rE/sendDocument \
-        -F chat_id="-1001695676652" \
-        -F document=@"$1" \
-        -F caption="$2" \
-        -F "parse_mode=html" \
-        -F "disable_web_page_preview=true"
-}
 
 # Export defconfig
 echo -e "$blue    \nMake DefConfig\n $nocol"
@@ -163,8 +143,8 @@ make O=out ARCH=arm64 $DEFCONFIG
 
 if $regen; then
 	cp out/.config arch/arm64/configs/$DEFCONFIG
-	sed -i "48s/.*/CONFIG_LOCALVERSION=\"-Chidori-Kernel\"/g" arch/arm64/configs/$DEFCONFIG
-	git commit -am "defconfig: olives: Regenerate" --signoff
+	sed -i "48s/.*/CONFIG_LOCALVERSION=\"-Nethunter\"/g" arch/arm64/configs/$DEFCONFIG
+	git commit -am "defconfig:" $DEVICE "Regenerate" --signoff
 	echo -e "$grn \nRegened defconfig succesfully!\n $nocol"
 	make mrproper
 	echo -e "$grn \nCleaning was successful succesfully!\n $nocol"
@@ -198,7 +178,7 @@ if [ -f "$kernel" ] && [ -f "$dtbo" ]; then
 	echo -e "$blue    \nKernel compiled succesfully! Zipping up...\n $nocol"
 	if ! [ -d "AnyKernel3" ]; then
 		echo -e "$grn \nAnyKernel3 not found! Cloning...\n $nocol"
-		if ! git clone https://github.com/CraftRom/AnyKernel3 -b olives AnyKernel3; then
+		if ! git clone https://github.com/IamCOD3X/AnyKernel3.git; then
 			echo -e "$grn \nCloning failed! Aborting...\n $nocol"
 		fi
 	fi
@@ -213,34 +193,10 @@ if [ -f "$kernel" ] && [ -f "$dtbo" ]; then
 	rm -rf out/arch/arm64/boot
 
 
-
-	# Push kernel to telegram
-	if ! $do_not_send_to_tg; then
-		push_document "$ZIPNAME" "
-		<b>CHIDORI KERNEL | $DEVICE</b>
-		New update available!
-		
-		<i>${DESC:-No description given...}</i>
-		
-		<b>Maintainer:</b> <code>$KBUILD_BUILD_USER</code>
-		<b>Builder:</b> $BUILDER
-		<b>Linux:</b> <code>$KERN_VER</code>
-		<b>Type:</b> <code>$TYPE</code>
-		<b>BuildDate:</b> <code>$BUILD_DATE</code>
-		<b>Filename:</b> <code>$ZIPNAME</code>
-		<b>md5 checksum :</b> <code>$(md5sum "$ZIPNAME" | cut -d' ' -f1)</code>
-		
-		#olive #olivelite #olivewood #olives #pine #kernel"
-
-		echo -e "$grn \n\n(i)          Send to telegram succesfully!\n $nocol"
-	fi
-
 	# TEMP
 	sed -i "48s/-experimental//" arch/arm64/configs/$DEFCONFIG
 else
 	echo -e "$red \nKernel Compilation failed! Fix the errors!\n $nocol"
-	# Push message if build error
-	push_message "$BUILDER! <b>Failed building kernel for <code>$DEVICE</code> Please fix it...!</b>"
 		sleep 4
 	exit 1
 fi
