@@ -40,6 +40,7 @@ sendInfo() {
           done
       )"
 }
+$LINKER=ld.lld
 
 # Constants
 green='\033[01;32m'
@@ -182,6 +183,7 @@ build_kernel() {
                         CROSS_COMPILE=aarch64-linux-android- \
                         CROSS_COMPILE_ARM32=arm-linux-androideabi-
 			CC="ccache clang" \
+			LD=$LINKER \
 			AR=llvm-ar \
 			OBJDUMP=llvm-objdump \
 			STRIP=llvm-strip \
@@ -192,6 +194,7 @@ build_kernel() {
 		MAKE+=(
 			CROSS_COMPILE_ARM32=arm-eabi- \
 			CROSS_COMPILE=aarch64-elf- \
+			LD=$LINKER \
 			AR=aarch64-elf-ar \
 			OBJDUMP=aarch64-elf-objdump \
 			STRIP=aarch64-elf-strip
