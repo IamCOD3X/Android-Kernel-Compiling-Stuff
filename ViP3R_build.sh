@@ -51,7 +51,7 @@ blue='\033[0;34m'
 default='\033[0m'
 DATE=$(date +"%Y%m%d-%H%M")
 TELEGRAM=Telegram/telegram
-CHANNEL_ID=-10012615117990
+CHANNEL_ID=-xx
 
 ##--------------------------------------------------------##
 ##----------Basic Informations and Variables--------------##
@@ -66,11 +66,11 @@ VERSION="1.0"
 #MODEL="OnePlus Nord"
 
 # The codename of the device
-DEVICE="beryllium"
+DEVICE="olive"
 
 # The defconfig which should be used. Get it from config.gz from
 # your device or check source
-DEFCONFIG=nethunter_defconfig
+DEFCONFIG=cod3x_nethunter_defconfig
 
 # Specify compiler.
 # 'clang' or 'gcc'
@@ -118,12 +118,15 @@ DATE=$(TZ=Asia/Kolkata date +"%Y%m%d-%T")
 		msg "|| Cloning GCC 9.3.0 baremetal ||"
 		git clone --depth=1 https://github.com/arter97/arm64-gcc.git gcc64
 		git clone --depth=1 https://github.com/arter97/arm32-gcc.git gcc32
-		GCC64_DIR=$KERNEL_DIR/gcc64
-		GCC32_DIR=$KERNEL_DIR/gcc32
+		GCC64_DIR=$KERNEL_DIR/home/cod3x/Android/Kernels/ToolChains/gcc
+		GCC32_DIR=$KERNEL_DIR/home/cod3x/Android/Kernels/ToolChains/gcc32
 	fi
 
 	msg "|| Cloning libufdt ||"
 	git clone https://android.googlesource.com/platform/system/libufdt /home/cod3x/Android/Kernels/ToolChains/scripts/ufdt/libufdt
+	
+	msg "|| Cloning Anykernel3 ||"
+	git clone https://github.com/IamCOD3X/AnyKernel3.git AnyKernel3
 }
 
 
@@ -213,7 +216,7 @@ build_kernel() {
 	    	if [ $BUILD_DTBO = 1 ]
 			then
 				msg "|| Building DTBO ||"
-				python2 "/home/DECODER/Downloads/Kernel/ToolChains/scripts/ufdt/libufdt/utils/src/mkdtboimg.py" \
+				python2 "/home/cod3x/Android/Kernel/ToolChains/scripts/ufdt/libufdt/utils/src/mkdtboimg.py" \
 				create "$KERNEL_DIR/out/arch/arm64/boot/dtbo.img" --page_size=4096 "$KERNEL_DIR/out/arch/arm64/boot/dts/vendor/qcom/avicii-overlay.dtbo"
 			fi
 				gen_zip
@@ -223,6 +226,7 @@ build_kernel() {
 }
 ##-----------------------------------------------------------##
 ##--------------Compile AnyKernel Zip------------------------##
+
 
 gen_zip() {
 	msg "|| Zipping into a flashable zip ||"
@@ -238,7 +242,7 @@ msg "|| Uploading ||"
 	cd ..
 	DATE=$(date +"%Y%m%d-%H%M")
 	TELEGRAM=Telegram/telegram
-	CHANNEL_ID=-10012615117990
+	CHANNEL_ID=-xxxx
 	"${TELEGRAM}" -f "$(echo "$(pwd)"/AnyKernel3/*.zip)" -c "${CHANNEL_ID}" -H "nacho bc"
 	sendInfo "<b>BUILD took $((DIFF / 60))m:$((DIFF % 60))s </b>" \
 	         "=================================" \

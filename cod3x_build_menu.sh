@@ -106,7 +106,7 @@ build_kernel(){
 anykernel3(){
   if [ ! -d $PARENT_DIR/AnyKernel3 ]; then
     pause 'clone AnyKernel3 - Flashable Zip Template'
-    git clone https://github.com/osm0sis/AnyKernel3 $PARENT_DIR/AnyKernel3
+    git clone https://github.com/IamCOD3X/AnyKernel3.git $PARENT_DIR/AnyKernel3
   fi
   variant
   if [ -e $DIR/arch/arm64/boot/Image ]; then
