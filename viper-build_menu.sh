@@ -64,7 +64,7 @@ make kernelversion \
     | grep -v make > linuxver & wait $!
 KERN_VER="$(head -n 1 linuxver)"
 BUILD_DATE=$(date '+%Y-%m-%d  %H:%M')
-DEVICE="Redmi 8"
+DEVICE="" # Add Device Name
 KERNELNAME="ViP3R-$TYPE"
 if $miui; then
 ZIPNAME="ViP3R-KERNEL-$(date '+%Y%m%d%H%M')-$TYPE.zip"
@@ -72,7 +72,7 @@ else
 ZIPNAME="ViP3R-KERNEL-$(date '+%Y%m%d%H%M')-$TYPE.zip"
 fi
 TC_DIR="/home/cod3x/Android/Kernels/ToolChains/proton-clang"
-DEFCONFIG="olive-perf_defconfig"
+DEFCONFIG="_defconfig" # Add Defconfig
 sed -i "48s/.*/CONFIG_LOCALVERSION=\"-${KERNELNAME}\"/g" arch/arm64/configs/$DEFCONFIG
 
 export PATH="$TC_DIR/bin:$PATH"
