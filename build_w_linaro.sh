@@ -24,7 +24,7 @@ make -j$(nproc --all) O=out \
                       CLANG_TRIPLE=aarch64-linux-gnu- \
                       CROSS_COMPILE="${PWD}/los-4.9-64/bin/aarch64-linux-gnu-" \
                       CROSS_COMPILE_ARM32="${PWD}/los-4.9-32/bin/arm-linux-gnueabihf-" \
-                      CONFIG_NO_ERROR_ON_MISMATCH=y
+                      # CONFIG_NO_ERROR_ON_MISMATCH=y
 }
 
 function zupload()
@@ -33,9 +33,6 @@ git clone --depth=1 https://github.com/IamCOD3X/Anykernel3.git Anykernel3
 cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3
 cd AnyKernel3
 zip -r9 ViP3R-v1.0-INDIA.zip *
-#curl --upload-file Test-OSS-KERNEL-RMX2020-NEOLIT.zip https://transfer.sh/
-#curl -sL https://git.io/file-transfer | sh
-#./transfer wet Test-OSS-KERNEL-RMX2020-NEOLIT.zip
 }
 
 compile

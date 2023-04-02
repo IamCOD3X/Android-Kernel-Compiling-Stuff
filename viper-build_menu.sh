@@ -143,7 +143,7 @@ make O=out ARCH=arm64 $DEFCONFIG
 
 if $regen; then
 	cp out/.config arch/arm64/configs/$DEFCONFIG
-	sed -i "48s/.*/CONFIG_LOCALVERSION=\"-Nethunter\"/g" arch/arm64/configs/$DEFCONFIG
+	sed -i "48s/.*/CONFIG_LOCALVERSION=\"-NetHunter\"/g" arch/arm64/configs/$DEFCONFIG
 	git commit -am "defconfig:" $DEVICE "Regenerate" --signoff
 	echo -e "$grn \nRegened defconfig succesfully!\n $nocol"
 	make mrproper
