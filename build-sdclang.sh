@@ -1,14 +1,14 @@
-export PATH="/home/cod3x/Android/Kernels/ToolChains/sd-86x64/bin:$PATH"
+export PATH="/home/cod3x/Android/Kernels/ToolChains/clang-sd/bin:$PATH"
 GCCPATH="/home/cod3x/Android/Kernels/ToolChains/aarch64-linux-android-4.9/bin"
 GCCPATH_32="/home/cod3x/Android/Kernels/ToolChains/arm-linux-androideabi-4.9/bin"
 SECONDS=0
 ZIPNAME="ViP3R-v1.0-$(date '+%Y%m%d-%H%M')-sdclang.zip"
 
 mkdir -p out
-make O=out ARCH=arm64 vendor/ginkgo-perf_defconfig
+make O=out ARCH=arm64 vendor/nethunter_defconfig
 
 if [[ $1 == "-r" || $1 == "--regen" ]]; then
-cp out/.config arch/arm64/configs/vendor/ginkgo-perf_defconfig
+cp out/.config arch/arm64/configs/vendor/nethunter_defconfig
 echo -e "\nRegened defconfig succesfully!"
 exit 0
 else
@@ -18,7 +18,7 @@ fi
 
 if [ -f "out/arch/arm64/boot/Image.gz-dtb" ] && [ -f "out/arch/arm64/boot/dtbo.img" ]; then
 echo -e "\nKernel compiled succesfully! Zipping up...\n"
-git clone -q https://github.com/ghostrider-reborn/AnyKernel3
+git clone -q https://github.com/IamCOD3X/AnyKernel3
 cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3
 cp out/arch/arm64/boot/dtbo.img AnyKernel3
 rm -f *zip

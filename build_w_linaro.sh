@@ -33,6 +33,8 @@ git clone --depth=1 https://github.com/IamCOD3X/Anykernel3.git Anykernel3
 cp out/arch/arm64/boot/Image.gz-dtb AnyKernel3
 cd AnyKernel3
 zip -r9 ViP3R-v1.0-INDIA.zip *
+curl -sL https://git.io/file-transfer | sh
+./transfer wet ViP3R-v1.0-INDIA.zip
 }
 
 compile
