@@ -64,20 +64,21 @@ make kernelversion \
     | grep -v make > linuxver & wait $!
 KERN_VER="$(head -n 1 linuxver)"
 BUILD_DATE=$(date '+%Y-%m-%d  %H:%M')
-DEVICE="" # Add Device Name
+DEVICE=""                                                                   # Add Device Name
+VERSION="1.0"
 KERNELNAME="ViP3R-$TYPE"
 if $miui; then
-ZIPNAME="ViP3R-KERNEL-$(date '+%Y%m%d%H%M')-$TYPE.zip"
+ZIPNAME="ViP3R-KERNEL-$VERSION-$(date '+%Y%m%d%H%M')-$TYPE.zip"
 else
-ZIPNAME="ViP3R-KERNEL-$(date '+%Y%m%d%H%M')-$TYPE.zip"
+ZIPNAME="ViP3R-KERNEL-$VERSION-$(date '+%Y%m%d%H%M')-$TYPE.zip"
 fi
 TC_DIR="/home/cod3x/Android/Kernels/ToolChains/proton-clang"
-DEFCONFIG="_defconfig" # Add Defconfig
-sed -i "48s/.*/CONFIG_LOCALVERSION=\"-${KERNELNAME}\"/g" arch/arm64/configs/$DEFCONFIG
+DEFCONFIG="_defconfig"                                                      # Add Defconfig
+
 
 export PATH="$TC_DIR/bin:$PATH"
 export KBUILD_BUILD_USER="COD3X"
-export KBUILD_BUILD_HOST=COD3X-BUILD
+export KBUILD_BUILD_HOST=Ryzen
 
 # Builder detection
 [ -n "$HOSTNAME" ] && NAME=$HOSTNAME
@@ -168,8 +169,7 @@ fi
 
 # Build start
 echo -e "$blue    \nStarting kernel compilation...\n $nocol"
-make -j$(nproc --all) O=out ARCH=arm64 CC=clang LD=ld.lld AS=llvm-as AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- CLANG_TRIPLE=aarch64-linux-gnu- Image.gz-dtb dtbo.img
-
+make -j$(nproc --all) O=out ARCH=arm64 CC=clang LD=ld.lld AS=llvm-as AR=llvm-ar NM=llvm-nm OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump STRIP=llvm-strip CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_ARM32=arm-linux-gnueabi- CLANG_TRIPLE=aarch64-linux-gnu- Image.gz-dtb dtbo.img CONFIG_NO_ERROR_ON_MISMATCH=y 
 
 kernel="out/arch/arm64/boot/Image.gz-dtb"
 dtbo="out/arch/arm64/boot/dtbo.img"
@@ -190,7 +190,6 @@ if [ -f "$kernel" ] && [ -f "$dtbo" ]; then
 	cd ..
 	echo -e "$grn \n(i)          Completed build$nocol $red$((SECONDS / 60))$nocol $grn minute(s) and$nocol $red$((SECONDS % 60))$nocol $grn second(s) !$nocol"
 	echo -e "$blue    \n             Flashable zip generated $yellow$ZIPNAME.\n $nocol"
-	rm -rf out/arch/arm64/boot
 
 
 	# TEMP
