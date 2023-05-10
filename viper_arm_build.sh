@@ -18,7 +18,7 @@
 ###################### CONFIG ######################
 
 # default device name (change this!)
-DEFAULT_DEVICE=dior
+DEFAULT_DEVICE=dandelion
 
 # default target name
 DEFAULT_TARGET=nethunter
@@ -27,7 +27,7 @@ DEFAULT_TARGET=nethunter
 RELEASE_VERSION=1.0
 
 # directory containing cross-compile arm64 toolchain (change this!)
-TOOLCHAIN=/home/cod3x/Android/Kernel/arm-eabi-4.8/
+TOOLCHAIN=/home/cod3x/Android/Kernels/ToolChains/arm-eabi-4.8/
 
 ############## SCARY NO-TOUCHY STUFF ###############
 
@@ -45,7 +45,7 @@ ABORT() {
 
 CONTINUE=false
 export ARCH=arm
-export CROSS_COMPILE=/home/cod3x/Android/Kernel/arm-eabi-4.8/bin/arm-eabi-
+export CROSS_COMPILE=/home/cod3x/Android/Kernels/ToolChains/arm-eabi-4.8/bin/arm-eabi-
 
 [ -x "${CROSS_COMPILE}gcc" ] ||
 ABORT "Unable to find gcc cross-compiler at location: ${CROSS_COMPILE}gcc"
@@ -67,7 +67,7 @@ done
 
 [ "$DEVICE" ] || DEVICE=$DEFAULT_DEVICE
 [ "$TARGET" ] || TARGET=$DEFAULT_TARGET
-DEFCONFIG=viper_defconfig
+DEFCONFIG=nethunter_defconfig
 
 [ -f "$RDIR/arch/$ARCH/configs/${DEFCONFIG}" ] ||
 ABORT "Config $DEFCONFIG not found in $ARCH configs!"
